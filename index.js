@@ -1,14 +1,27 @@
-const express = require('express')
-const {graphqlHTTP} = require('express-graphql')
-const schema = require('./models')
+const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
+const schema = require("./schema");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-const app = express()
+const app = express();
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  graphiql: true
-}))
+const dbConnection = mongoose.connection;
+dbConnection.on("error", (err) => console.error(err));
+dbConnection.once("open", () => console.log("DB connected"));
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: true,
+  })
+);
 
 app.listen(3001, () => {
-  console.log('Server is running on port 3001 !')
-})
+  console.log("Server is running on port 3001 !");
+});
