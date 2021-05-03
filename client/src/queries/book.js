@@ -9,6 +9,22 @@ export const BOOKS_QUERY = gql`
   }
 `;
 
+export const BOOK_DETAIL_QUERY = gql`
+  query($id: ID!){
+    book(id: $id){
+      name
+      genre
+      author{
+        name
+        books{
+          name
+          genre
+        }
+      }
+    }
+  }
+`
+
 export const ADD_BOOK_MUTATION = gql`
   mutation($name: String!, $genre: String!, $authorId: String!){
     addBook(name: $name, genre: $genre, authorId: $authorId){
@@ -17,3 +33,11 @@ export const ADD_BOOK_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_BOOK_MUTATION = gql`
+  mutation($id: String!){
+    deleteBook(id: $id){
+      name
+    }
+  }
+`

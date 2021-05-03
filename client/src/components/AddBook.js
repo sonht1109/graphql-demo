@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { AUTHORS_QUERY } from "../queries/author";
-import { ADD_BOOK_MUTATION } from "../queries/book";
+import { ADD_BOOK_MUTATION, BOOKS_QUERY } from "../queries/book";
 
-function AddBook({shouldRefetch}) {
+function AddBook() {
   const { data, loading, error } = useQuery(AUTHORS_QUERY);
   const [addBook] = useMutation(ADD_BOOK_MUTATION);
 
@@ -32,13 +32,12 @@ function AddBook({shouldRefetch}) {
   };
 
   const onSubmit = () => {
-    addBook({ variables: { ...book } });
-    shouldRefetch()
+    addBook({ variables: { ...book }, refetchQueries: [{query: BOOKS_QUERY}] });
     setBook({ ...book, name: "", genre: "", authorId: "" });
   };
 
   return (
-    <div>
+    <div className="add-book">
       <label>
         <span>Book name</span>
         <input name="name" value={book.name} onChange={onChange} />
