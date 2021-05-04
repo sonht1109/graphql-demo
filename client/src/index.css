@@ -53,3 +53,35 @@ p {
   display: flex;
   flex-direction: column;
 }
+
+.loading{
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  border: 5px solid #bed9ed;
+  border-radius: 50%;
+  position: relative;
+}
+
+.loading > .spinner{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100%);
+  height: calc(100%);
+  border: 5px solid #4b9cdb;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: 1s loading linear infinite;
+}
+
+@keyframes loading{
+  from{
+    transform: translate(-5px, -5px) rotate(0);
+  }
+  to{
+    transform: translate(-5px, -5px) rotate(360deg);
+  }
+}

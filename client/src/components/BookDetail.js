@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { BOOK_DETAIL_QUERY } from "../queries/book";
+import Loading from "./Loading";
 
 export default function BookDetail({ id }) {
   const { data, error, loading } = useQuery(BOOK_DETAIL_QUERY, {
     variables: { id },
   });
-  if (loading) return <p>Loading ...</p>;
+  if (loading) return <Loading />;
   if (error) return <p>Error in fetching ...</p>;
 
   return (
